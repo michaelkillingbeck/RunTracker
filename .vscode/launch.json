@@ -1,0 +1,16 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug FitParser.Test (External Console)",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "${workspaceFolder}/RunTracker.FitParser.Test/bin/Debug/net8.0/RunTracker.FitParser.Test.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/RunTracker.FitParser.Test",
+            "stopAtEntry": false,
+            "console": "externalTerminal",
+            "preLaunchTask": "build"
+        }
+    ]
+}

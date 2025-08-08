@@ -8,3 +8,6 @@ obj/
 *.userosscache
 *.sln.docstates
 .vs/
+
+# FIT files (exclude sample data and personal activity files)
+FITFiles/

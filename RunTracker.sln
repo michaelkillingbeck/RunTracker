@@ -1,0 +1,30 @@
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RunTracker.Models", "RunTracker.Models\RunTracker.Models.csproj", "{7D23DA5C-7016-949B-05BA-2FC1A8CD2628}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RunTracker.FitParser.Test", "RunTracker.FitParser.Test\RunTracker.FitParser.Test.csproj", "{69BCEA50-A742-4A63-AD01-6318FE984007}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7D23DA5C-7016-949B-05BA-2FC1A8CD2628}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D23DA5C-7016-949B-05BA-2FC1A8CD2628}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D23DA5C-7016-949B-05BA-2FC1A8CD2628}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D23DA5C-7016-949B-05BA-2FC1A8CD2628}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69BCEA50-A742-4A63-AD01-6318FE984007}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69BCEA50-A742-4A63-AD01-6318FE984007}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69BCEA50-A742-4A63-AD01-6318FE984007}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69BCEA50-A742-4A63-AD01-6318FE984007}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AB5DD277-19AF-4AC0-8F37-63802A96AA56}
+	EndGlobalSection
+EndGlobal
