@@ -2,12 +2,14 @@ using Dynastream.Fit;
 using RunTracker.Models;
 using DateTime = System.DateTime;
 
+namespace RunTracker.FitParser;
+
 public static class FitToRunConverter
 {
     public static Run? ExtractRunFromFitFile(string fitFilePath)
     {
         var (sessionMessage, activityMessage) = ParseFitFile(fitFilePath);
-        
+
         if (sessionMessage == null)
         {
             return null;
@@ -35,7 +37,7 @@ public static class FitToRunConverter
         };
 
         using var fitStream = new FileStream(fitFilePath, FileMode.Open, FileAccess.Read);
-        
+
         if (!decoder.IsFIT(fitStream))
         {
             throw new InvalidOperationException("Not a valid FIT file");
@@ -52,9 +54,8 @@ public static class FitToRunConverter
         var duration = TimeSpan.FromSeconds(durationSeconds);
         var averageHeartRate = (int)(sessionMessage.GetAvgHeartRate() ?? 0);
         var averagePace = distanceKm > 0 ? TimeSpan.FromSeconds(durationSeconds / distanceKm) : TimeSpan.Zero;
-        
-        var startTime = activityMessage?.GetTimestamp()?.GetDateTime() ?? 
-                       sessionMessage.GetStartTime()?.GetDateTime() ?? 
+        var startTime = activityMessage?.GetTimestamp()?.GetDateTime() ??
+                       sessionMessage.GetStartTime()?.GetDateTime() ??
                        DateTime.UtcNow;
 
         return new Run
@@ -64,7 +65,7 @@ public static class FitToRunConverter
             Duration = duration,
             DistanceKm = distanceKm,
             AverageHeartRate = averageHeartRate,
-            AveragePace = averagePace
+            AveragePace = averagePace,
         };
     }
 }

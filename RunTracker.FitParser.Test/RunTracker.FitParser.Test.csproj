@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RunTracker.Models\RunTracker.Models.csproj" />
+    <ProjectReference Include="..\RunTracker.FitParser\RunTracker.FitParser.csproj" />
   </ItemGroup>
 
 </Project>

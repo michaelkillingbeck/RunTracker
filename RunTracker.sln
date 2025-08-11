@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RunTracker.Models", "RunTra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RunTracker.FitParser.Test", "RunTracker.FitParser.Test\RunTracker.FitParser.Test.csproj", "{69BCEA50-A742-4A63-AD01-6318FE984007}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RunTracker.FitParser", "RunTracker.FitParser\RunTracker.FitParser.csproj", "{1E06A5A4-4087-4DF0-8A6E-E208074F97E7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,6 +22,10 @@ Global
 		{69BCEA50-A742-4A63-AD01-6318FE984007}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{69BCEA50-A742-4A63-AD01-6318FE984007}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{69BCEA50-A742-4A63-AD01-6318FE984007}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E06A5A4-4087-4DF0-8A6E-E208074F97E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E06A5A4-4087-4DF0-8A6E-E208074F97E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E06A5A4-4087-4DF0-8A6E-E208074F97E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E06A5A4-4087-4DF0-8A6E-E208074F97E7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

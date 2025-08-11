@@ -1,4 +1,5 @@
-﻿// Example: Extract Run object from FIT file
+﻿using RunTracker.FitParser;
+
 try
 {
     var run = FitToRunConverter.ExtractRunFromFitFile("FITFiles\\sample.fit");
