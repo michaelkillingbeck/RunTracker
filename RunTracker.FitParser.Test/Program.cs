@@ -1,35 +1,27 @@
-﻿using Dynastream.Fit;
-
-var decoder = new Decode();
-var messages = new List<Mesg>();
-
-int messagesCount = 0;
-
-decoder.MesgEvent += (sender, e) =>
+﻿// Example: Extract Run object from FIT file
+try
 {
-    messagesCount++;
-    messages.Add(e.mesg);
-};
-
-using var fitStream = new FileStream("FITFiles\\sample.fit", FileMode.Open, FileAccess.Read);
-if (decoder.IsFIT(fitStream) == false)
+    var run = FitToRunConverter.ExtractRunFromFitFile("FITFiles\\sample.fit");
+    
+    if (run != null)
+    {
+        Console.WriteLine("Run Data Extracted:");
+        Console.WriteLine($"ID: {run.Id}");
+        Console.WriteLine($"Start Time: {run.StartTime:yyyy-MM-dd HH:mm:ss}");
+        Console.WriteLine($"Duration: {run.Duration:hh\\:mm\\:ss}");
+        Console.WriteLine($"Distance: {run.DistanceKm:F2} km");
+        Console.WriteLine($"Average Heart Rate: {run.AverageHeartRate} bpm");
+        Console.WriteLine($"Average Pace: {run.AveragePace:mm\\:ss} per km");
+    }
+    else
+    {
+        Console.WriteLine("Could not extract run data from FIT file");
+    }
+}
+catch (Exception ex)
 {
-    throw new InvalidOperationException("Not a valid FIT file");
+    Console.WriteLine($"Error: {ex.Message}");
 }
 
-decoder.Read(fitStream);
-
-Console.WriteLine($"{messagesCount} messages received");
-Console.WriteLine();
-
-var messageTypes = messages
-    .GroupBy(message => message.Name)
-    .OrderByDescending(group => group.Count())
-    .ToList();
-
-foreach (var messageGroup in messageTypes)
-{
-    Console.WriteLine($"{messageGroup.Key}: {messageGroup.Count()}");
-}
-
+Console.WriteLine("\nPress any key to continue...");
 Console.ReadKey();

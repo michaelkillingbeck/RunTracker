@@ -11,4 +11,8 @@
     <PackageReference Include="Garmin.FIT.Sdk" Version="21.171.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\RunTracker.Models\RunTracker.Models.csproj" />
+  </ItemGroup>
+
 </Project>
