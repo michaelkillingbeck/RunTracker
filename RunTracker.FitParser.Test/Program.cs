@@ -2,7 +2,7 @@
 
 try
 {
-    var run = FitToRunConverter.ExtractRunFromFitFile("FITFiles\\sample.fit");
+    var run = FitToRunConverter.ExtractRunFromFitFile(Path.Combine("FITFiles", "sample.fit"));
     
     if (run != null)
     {

@@ -8,54 +8,27 @@ public static class FitToRunConverter
 {
     public static Run? ExtractRunFromFitFile(string fitFilePath)
     {
-        var (sessionMessage, activityMessage) = ParseFitFile(fitFilePath);
+        var visitor = new RunDataVisitor();
+        FitMessageExtractor.ExtractMessages(fitFilePath, visitor);
 
-        if (sessionMessage == null)
+        if (visitor.SessionMessage == null || visitor.ActivityMessage == null)
         {
             return null;
         }
 
-        return CreateRunFromMessages(sessionMessage, activityMessage);
+        return Create(visitor);
     }
 
-    private static (SessionMesg?, ActivityMesg?) ParseFitFile(string fitFilePath)
+    public static Run Create(RunDataVisitor visitor)
     {
-        var decoder = new Decode();
-        SessionMesg? sessionMessage = null;
-        ActivityMesg? activityMessage = null;
-
-        decoder.MesgEvent += (sender, e) =>
-        {
-            if (e.mesg.Name == "Session")
-            {
-                sessionMessage = new SessionMesg(e.mesg);
-            }
-            else if (e.mesg.Name == "Activity")
-            {
-                activityMessage = new ActivityMesg(e.mesg);
-            }
-        };
-
-        using var fitStream = new FileStream(fitFilePath, FileMode.Open, FileAccess.Read);
-
-        if (!decoder.IsFIT(fitStream))
-        {
-            throw new InvalidOperationException("Not a valid FIT file");
-        }
-
-        decoder.Read(fitStream);
-        return (sessionMessage, activityMessage);
-    }
-
-    private static Run CreateRunFromMessages(SessionMesg sessionMessage, ActivityMesg? activityMessage)
-    {
-        var distanceKm = (sessionMessage.GetTotalDistance() ?? 0) / 1000f;
-        var durationSeconds = sessionMessage.GetTotalTimerTime() ?? 0;
+        ArgumentNullException.ThrowIfNull(visitor);
+        var distanceKm = CalculateDistance(visitor);
+        var durationSeconds = visitor.SessionMessage!.GetTotalTimerTime() ?? 0;
         var duration = TimeSpan.FromSeconds(durationSeconds);
-        var averageHeartRate = (int)(sessionMessage.GetAvgHeartRate() ?? 0);
+        var averageHeartRate = CalculateAverageHeartRate(visitor);
         var averagePace = distanceKm > 0 ? TimeSpan.FromSeconds(durationSeconds / distanceKm) : TimeSpan.Zero;
-        var startTime = activityMessage?.GetTimestamp()?.GetDateTime() ??
-                       sessionMessage.GetStartTime()?.GetDateTime() ??
+        var startTime = visitor.ActivityMessage!.GetTimestamp()?.GetDateTime() ??
+                       visitor.SessionMessage.GetStartTime()?.GetDateTime() ??
                        DateTime.UtcNow;
 
         return new Run
@@ -67,5 +40,29 @@ public static class FitToRunConverter
             AverageHeartRate = averageHeartRate,
             AveragePace = averagePace,
         };
+    }
+
+    private static float CalculateDistance(RunDataVisitor visitor)
+    {
+        // Try to get distance from Record messages first
+        if (visitor.FinalDistance > 0)
+        {
+            return visitor.FinalDistance / 1000f; // Convert from meters to kilometers
+        }
+
+        // Fall back to Session message distance
+        return (visitor.SessionMessage!.GetTotalDistance() ?? 0) / 1000f;
+    }
+
+    private static int CalculateAverageHeartRate(RunDataVisitor visitor)
+    {
+        // Try to get average heart rate from Record messages first
+        if (visitor.AverageHeartRate > 0)
+        {
+            return (int)visitor.AverageHeartRate;
+        }
+
+        // Fall back to Session message average heart rate
+        return (int)(visitor.SessionMessage!.GetAvgHeartRate() ?? 0);
     }
 }

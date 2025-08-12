@@ -14,13 +14,18 @@ end_of_line = crlf
 
 # Disable StyleCop rules we don't want
 dotnet_diagnostic.SA0001.severity = none    # XML comment analysis disabled
+dotnet_diagnostic.SA1101.severity = none    # Prefix local calls with this
 dotnet_diagnostic.SA1200.severity = none    # Using directives must ve place within namespace
+dotnet_diagnostic.SA1201.severity = none    # Constructor should not follow property
 dotnet_diagnostic.SA1600.severity = none    # Elements should be documented
 dotnet_diagnostic.SA1633.severity = none    # File must have header
 
 # C# Coding Conventions
 dotnet_sort_system_directives_first = true
 dotnet_separate_import_directive_groups = false
+
+# Remove unnecessary using directives
+dotnet_diagnostic.IDE0005.severity = error
 
 # Naming conventions
 dotnet_naming_rule.interfaces_should_be_prefixed_with_i.severity = warning

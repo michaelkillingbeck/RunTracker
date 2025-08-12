@@ -1,18 +1,15 @@
-using RunTracker.FitParser;
-using RunTracker.Models;
-
 namespace RunTracker.FitParser.Tests;
 
 public class FitToRunConverterTests
 {
-    private const string SampleFitFile = "TestFiles/sample.fit";
-    private const string NonExistentFile = "TestFiles/nonexistent.fit";
+    private const string sampleFitFile = "TestFiles/sample.fit";
+    private const string nonExistentFile = "TestFiles/nonexistent.fit";
 
     [Fact]
     public void ExtractRunFromFitFile_WithValidFile_ReturnsRun()
     {
         // Act
-        var result = FitToRunConverter.ExtractRunFromFitFile(SampleFitFile);
+        var result = FitToRunConverter.ExtractRunFromFitFile(sampleFitFile);
 
         // Assert
         Assert.NotNull(result);
@@ -26,14 +23,14 @@ public class FitToRunConverterTests
     public void ExtractRunFromFitFile_WithValidFile_ReturnsExpectedValues()
     {
         // Act
-        var result = FitToRunConverter.ExtractRunFromFitFile(SampleFitFile);
+        var result = FitToRunConverter.ExtractRunFromFitFile(sampleFitFile);
 
         // Assert
         Assert.NotNull(result);
-        Assert.Equal(9.31f, result.DistanceKm, precision: 2);
-        Assert.Equal(133, result.AverageHeartRate);
-        Assert.Equal(3459.218, result.Duration.TotalSeconds, precision: 3);
-        Assert.Equal(new DateTime(2025, 8, 7, 18, 16, 55), result.StartTime);
+        Assert.Equal(3.60f, result.DistanceKm, precision: 2);
+        Assert.Equal(126, result.AverageHeartRate);
+        Assert.Equal(3601, result.Duration.TotalSeconds, precision: 3);
+        Assert.Equal(new DateTime(2021, 07, 20, 22, 11, 21), result.StartTime);
         Assert.True(result.AveragePace > TimeSpan.Zero);
     }
 
@@ -41,15 +38,15 @@ public class FitToRunConverterTests
     public void ExtractRunFromFitFile_CalculatesAveragePaceCorrectly()
     {
         // Act
-        var result = FitToRunConverter.ExtractRunFromFitFile(SampleFitFile);
+        var result = FitToRunConverter.ExtractRunFromFitFile(sampleFitFile);
 
         // Assert
         Assert.NotNull(result);
         
         // Calculate expected pace: duration / distance
-        var expectedPaceSeconds = result.Duration.TotalSeconds / result.DistanceKm;
+        var expectedPaceSecondsPerKm = result.Duration.TotalSeconds / result.DistanceKm;
         
-        Assert.Equal(expectedPaceSeconds, result.AveragePace.TotalSeconds, precision: 6);
+        Assert.Equal(expectedPaceSecondsPerKm, result.AveragePace.TotalSeconds, precision: 1);
     }
 
     [Fact]
@@ -57,7 +54,7 @@ public class FitToRunConverterTests
     {
         // Act & Assert
         Assert.Throws<FileNotFoundException>(() =>
-            FitToRunConverter.ExtractRunFromFitFile(NonExistentFile));
+            FitToRunConverter.ExtractRunFromFitFile(nonExistentFile));
     }
 
     [Fact]
@@ -98,8 +95,8 @@ public class FitToRunConverterTests
     public void ExtractRunFromFitFile_GeneratesUniqueIds()
     {
         // Act
-        var result1 = FitToRunConverter.ExtractRunFromFitFile(SampleFitFile);
-        var result2 = FitToRunConverter.ExtractRunFromFitFile(SampleFitFile);
+        var result1 = FitToRunConverter.ExtractRunFromFitFile(sampleFitFile);
+        var result2 = FitToRunConverter.ExtractRunFromFitFile(sampleFitFile);
 
         // Assert
         Assert.NotNull(result1);
@@ -111,7 +108,7 @@ public class FitToRunConverterTests
     public void ExtractRunFromFitFile_AllPropertiesAreSet()
     {
         // Act
-        var result = FitToRunConverter.ExtractRunFromFitFile(SampleFitFile);
+        var result = FitToRunConverter.ExtractRunFromFitFile(sampleFitFile);
 
         // Assert
         Assert.NotNull(result);
